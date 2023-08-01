@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Graphic 1</title>
+  </head>
+  <script
+    src="https://cdn.plot.ly/plotly-2.24.1.min.js"
+    charset="utf-8"
+  ></script>
+  <body>
+    <div id="pi" style="width: 100%; max-width: 2000px"></div>
+
+    <script>
+      const x_in = [];
+      const y_in = [];
+      const x_out = [];
+      const y_out = [];
+
+      let inside = 0;
+      const n = 5000;
+
+      for (let i = 0; i < n; i++) {
+        x = Math.random() * 2 - 1;
+        y = Math.random() * 2 - 1;
+        if (x ** 2 + y ** 2 <= 1) {
+          inside += 1;
+          x_in.push(x);
+          y_in.push(y);
+        } else {
+          x_out.push(x);
+          y_out.push(y);
+        }
+      }
+
+      let pi = (4 * inside) / n;
+      console.log(pi);
+
+      // Display using Plotly
+
+      const layout_pi = {
+        xaxis: {
+          range: [-1.5, 1.5],
+          scaleanchor: "y",
+          scaleratio: 1,
+          ticks: "outside",
+          tickvals: [-1, -0.5, 0, 0.5, 1],
+          ticktext: ["-1", "-0.5", "0", "0.5", "1"],
+          tickmode: "array",
+          tickangle: 0,
+          tickfont: {
+            size: 10,
+          },
+          showline: true,
+          showgrid: true,
+          gridwidth: 1,
+          gridcolor: "lightgray",
+          zeroline: false,
+        },
+        yaxis: {
+          range: [-1.5, 1.5],
+          scaleanchor: "x",
+          scaleratio: 1,
+          ticks: "outside",
+          tickvals: [-1, -0.5, 0, 0.5, 1],
+          ticktext: ["-1", "-0.5", "0", "0.5", "1"],
+          tickmode: "array",
+          tickangle: 0,
+          tickfont: {
+            size: 10,
+          },
+          showline: true,
+          showgrid: true,
+          gridwidth: 1,
+          gridcolor: "lightgray",
+          zeroline: false,
+        },
+        title: "Pi number using random numbers  Pi: " + pi.toFixed(2),
+      };
+
+      const data_pix = [{ x: x_in, y: y_in, mode: "markers" }];
+      const data_piy = [{ x: x_out, y: y_out, mode: "markers", color: "red" }];
+
+      Plotly.newPlot("pi", [...data_pix, ...data_piy], layout_pi);
+    </script>
+  </body>
+</html>
